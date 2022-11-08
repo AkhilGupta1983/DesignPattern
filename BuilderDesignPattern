@@ -1,0 +1,73 @@
+
+public class BuilderDesignSample {
+
+	public static void main(String args[]) {
+
+		Asset asset = Asset.createAsset().withCustomAttribute(new CustomAttribute("aa")).isPublishedOrDraft(true)
+				.build();
+
+		System.out.println(" Asset is " + asset.toString());
+
+	}
+
+}
+
+class Asset {
+
+	private String assetName;
+	private boolean publishedOrDraft;
+	private CustomAttribute customAttribte;
+
+	public static AssetBuilder createAsset() {
+		return new AssetBuilder();
+	}
+
+	@Override
+	public String toString() {
+		return "Asset [assetName=" + assetName + ", publishedOrDraft=" + publishedOrDraft + ", customAttribte="
+				+ customAttribte + "]";
+	}
+
+	public static class AssetBuilder {
+
+		private String assetName;
+		private boolean publishedOrDraft;
+		private CustomAttribute customAttribte;
+
+		public AssetBuilder withCustomAttribute(CustomAttribute customAttribute) {
+			this.customAttribte = customAttribute;
+			return this;
+		}
+
+		public AssetBuilder isPublishedOrDraft(boolean flag) {
+			this.publishedOrDraft = flag;
+			return this;
+		}
+
+		public Asset build() {
+			Asset asset = new Asset();
+			asset.assetName = this.assetName;
+			asset.customAttribte = this.customAttribte;
+			asset.publishedOrDraft = this.publishedOrDraft;
+			return asset;
+		}
+		
+		
+
+	}
+}
+
+class CustomAttribute {
+	private String attributeName;
+
+	public CustomAttribute(String attributeName) {
+		super();
+		this.attributeName = attributeName;
+	}
+
+	@Override
+	public String toString() {
+		return "CustomAttribute [attributeName=" + attributeName + "]";
+	}
+
+}
