@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+import java.util.List;
+
+interface Stock {
+	void execute();
+}
+
+class StockSell implements Stock {
+	void sell() {
+		System.out.println(" Sell the stock ");
+	}
+
+	@Override
+	public void execute() {
+		sell();
+
+	}
+}
+
+class StockBuy implements Stock {
+	void buy() {
+		System.out.println(" Buy the stock ");
+	}
+
+	@Override
+	public void execute() {
+		buy();
+
+	}
+}
+
+class StockHold implements Stock {
+	void sell() {
+		System.out.println(" Hold the stock ");
+	}
+
+	@Override
+	public void execute() {
+		sell();
+
+	}
+}
+
+class CommandExecutor {
+	List<Stock> stocks = new ArrayList<>();
+
+	public void takeOrder(Stock stock) {
+		stocks.add(stock);
+	}
+
+	public void placeOrder() {
+		for (Stock s : stocks) {
+			s.execute();
+		}
+	}
+
+}
+
+public class CommandDesignSample {
+
+	public static void main(String args[]) {
+		StockBuy stockBuy = new StockBuy();
+		StockSell stockSell = new StockSell();
+		StockHold stockHold = new StockHold();
+
+		CommandExecutor commandExecutor = new CommandExecutor();
+		commandExecutor.takeOrder(stockSell);
+		commandExecutor.takeOrder(stockBuy);
+		commandExecutor.takeOrder(stockHold);
+
+		commandExecutor.placeOrder();
+
+	}
+
+}
