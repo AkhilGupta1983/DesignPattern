@@ -1,0 +1,69 @@
+
+public class DecoratorSample {
+
+	public static void main(String args[]) {
+
+		ContainerInter container = new WkcContainer();
+		container.createContainer();
+
+		System.out.println("<-------------->");
+		ContainerInter containerDecorator = new WkcContainerDecorator(container);
+		containerDecorator.createContainer();
+
+		System.out.println(":: " + containerDecorator.toString());
+
+	}
+
+}
+
+class WkcContainer implements ContainerInter {
+	@Override
+	public void createContainer() {
+		System.out.println(" Plain wkc container created...");
+
+	}
+}
+
+interface ContainerInter {
+
+	void createContainer();
+}
+
+class UGContainer {
+	private String containerName;
+
+	public UGContainer(String containerName) {
+		super();
+		this.containerName = containerName;
+	}
+
+}
+
+class WkcContainerDecorator implements ContainerInter {
+
+	private ContainerInter wkcContainer;
+
+	private UGContainer ugContainer;
+
+	public WkcContainerDecorator(ContainerInter wkcContainer) {
+		super();
+		this.wkcContainer = wkcContainer;
+	}
+
+	@Override
+	public String toString() {
+		return "WkcContainerDecorator [wkcContainer=" + wkcContainer + ", ugContainer=" + ugContainer + "]";
+	}
+
+	private void addUGContainer() {
+		this.ugContainer = new UGContainer("DfaultUG");
+	}
+
+	@Override
+	public void createContainer() {
+		this.wkcContainer.createContainer();
+		addUGContainer();
+
+	}
+
+}
